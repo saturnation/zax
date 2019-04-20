@@ -517,7 +517,6 @@ public class UserInterface extends JFrame implements ZUserInterface {
 					int oldattrs = screen.getAttributes();
 					screen.setAttributes(oldattrs & ~(TextScreen.KEYECHO));
 					screen.requestFocus();
-					int junk = screen.readChar();
 					screen.setAttributes(oldattrs);
 					screen.printString("\b\b\b\b\b\b\b\b\b\b");
 					moreLines = 0;
