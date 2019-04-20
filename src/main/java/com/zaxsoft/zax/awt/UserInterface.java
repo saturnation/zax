@@ -35,11 +35,11 @@ import com.zaxsoft.zax.zmachine.ZUserInterface;
  *
  * @author Matt Kimmel
  */
-public class AwtUserInterface extends Frame implements ZUserInterface {
+public class UserInterface extends Frame implements ZUserInterface {
     private TextScreen screen; // The main screen
-    private AwtWindow[] windows;  // Z-Machine Windows.
-    private AwtWindow curWindow; // The current window.
-    private AwtWindow statusBar; // The status bar, in V1-3
+    private Window[] windows;  // Z-Machine Windows.
+    private Window curWindow; // The current window.
+    private Window statusBar; // The status bar, in V1-3
     private Dimension screenSize; // Size of the entire screen in characters
     private int version = 0;    // Version of this story file - 0 if game not yet initialized.
     private int moreLines = 0; // Number of lines before next MORE
@@ -111,7 +111,7 @@ public class AwtUserInterface extends Frame implements ZUserInterface {
     }
 
     // Private method called when switching windows
-    private void switchWindow(AwtWindow w)
+    private void switchWindow(Window w)
     {
         curWindow.cursorPosition = screen.getCursorPosition();
         curWindow = w;
@@ -193,9 +193,9 @@ public class AwtUserInterface extends Frame implements ZUserInterface {
         if ((this.version == 1) || (this.version == 2)) { // V1-2
             // For version 1-2, we set up a status bar and a
             // lower window.
-            statusBar = new AwtWindow(0,0,screenSize.width,1);
-            windows = new AwtWindow[1];
-            windows[0] = new AwtWindow(0,1,screenSize.width,screenSize.height-1);
+            statusBar = new Window(0,0,screenSize.width,1);
+            windows = new Window[1];
+            windows[0] = new Window(0,1,screenSize.width,screenSize.height-1);
             
             // Start off in window 0
             curWindow = windows[0];
@@ -209,10 +209,10 @@ public class AwtUserInterface extends Frame implements ZUserInterface {
         if (this.version == 3) { // V3
             // For V3, we set up a status bar AND two windows.
             // This all may change.
-            statusBar = new AwtWindow(0,0,screenSize.width,1);
-            windows = new AwtWindow[2];
-            windows[1] = new AwtWindow(0,1,screenSize.width,0);
-            windows[0] = new AwtWindow(0,1,screenSize.width,screenSize.height-1);
+            statusBar = new Window(0,0,screenSize.width,1);
+            windows = new Window[2];
+            windows[1] = new Window(0,1,screenSize.width,0);
+            windows[0] = new Window(0,1,screenSize.width,screenSize.height-1);
 
             // Start off in window 0
             curWindow = windows[0];
@@ -227,9 +227,9 @@ public class AwtUserInterface extends Frame implements ZUserInterface {
 
         if (((this.version >= 4) && (this.version <= 8)) && (this.version != 6)) {
             // V4-5,7-8; Use an upper window and a lower window.
-            windows = new AwtWindow[2];
-            windows[0] = new AwtWindow(0,1,screenSize.width,screenSize.height-1);
-            windows[1] = new AwtWindow(0,0,screenSize.width,1);
+            windows = new Window[2];
+            windows[0] = new Window(0,1,screenSize.width,screenSize.height-1);
+            windows[1] = new Window(0,0,screenSize.width,1);
 
             // Start off in window 0
             curWindow = windows[0];
@@ -350,7 +350,7 @@ public class AwtUserInterface extends Frame implements ZUserInterface {
     {
 		String status;
 		String s1, s2, s3;
-        AwtWindow lastWindow;
+        Window lastWindow;
         
         // This is kinda hacky for now.
         lastWindow = curWindow;
@@ -575,7 +575,7 @@ public class AwtUserInterface extends Frame implements ZUserInterface {
 	// Erase a window
 	public void eraseWindow(int window)
 	{
-	    AwtWindow lastWindow;
+	    Window lastWindow;
 
 	    lastWindow = curWindow;
 	    switchWindow(windows[window]);

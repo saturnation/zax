@@ -99,7 +99,7 @@ class TextScreen extends java.awt.Component
             switch (parentObject.state)
             {
                 case TextScreen.READLINE : // Reading a line
-                    if (parentObject.terminators.contains(new Integer(key)))
+                    if (parentObject.terminators.contains(key))
                     {
                         parentObject.state = WRITE;
                         parentObject.readTerminator = key;
@@ -108,8 +108,9 @@ class TextScreen extends java.awt.Component
                         parentObject.readThread.interrupt();
                         return;
                     }
-                    if (((parentObject.attributes & KEYECHO) == KEYECHO) && !((((char)key) == '\b') && (parentObject.readString.length() == 0)))
+                    if (((parentObject.attributes & KEYECHO) == KEYECHO) && !((((char)key) == '\b') && (parentObject.readString.length() == 0))) {
                         parentObject.printString(String.valueOf((char)key));
+                    }
                     switch ((char)key)
                     {
                         case '\b' : 
@@ -184,7 +185,7 @@ class TextScreen extends java.awt.Component
         
         // Initialize terminating characters.  CR is one by default.
         terminators = new Vector();
-        terminators.addElement(new Integer(13));
+        terminators.addElement(13);
         
         // Add key listener
         addKeyListener(new TextScreenKeyboardEventHandler(this));
