@@ -30,12 +30,14 @@ import java.util.Vector;
 import com.zaxsoft.zax.zmachine.ZCPU;
 import com.zaxsoft.zax.zmachine.ZUserInterface;
 
+import javax.swing.*;
+
 /**
  * Zax main class.
  *
  * @author Matt Kimmel
  */
-public class UserInterface extends Frame implements ZUserInterface {
+public class UserInterface extends JFrame implements ZUserInterface {
     private TextScreen screen; // The main screen
     private Window[] windows;  // Z-Machine Windows.
     private Window curWindow; // The current window.

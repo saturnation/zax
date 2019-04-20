@@ -2,9 +2,13 @@ package com.zaxsoft.zax;
 
 import com.zaxsoft.zax.awt.UserInterface;
 
+import javax.swing.*;
+
 class Zax {
     public static void main(String... arguments) {
-        new Zax(new UserInterface()).run(Zax.class.getPackage().getImplementationVersion());
+        UserInterface userInterface = new UserInterface();
+        userInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        new Zax(userInterface).run(Zax.class.getPackage().getImplementationVersion());
     }
 
     private final UserInterface userInterface;
