@@ -52,15 +52,15 @@ class TextScreen extends java.awt.Component
 {
     // Public constants
     // Attributes
-    public static final int KEYECHO = 0x01; // Echo keyboard input
-    public static final int CURSOR = 0x02; // Display a cursor
-    public static final int AUTOWRAP = 0x04; // Autowrap lines
+    static final int KEYECHO = 0x01; // Echo keyboard input
+    static final int CURSOR = 0x02; // Display a cursor
+    private static final int AUTOWRAP = 0x04; // Autowrap lines
     
     // Constants
     // States -- These are protected so they can be seen by inner classes
-    protected static final int WRITE = 1; // Not reading
-    protected static final int READLINE = 2; // In readLine mode
-    protected static final int READCHAR = 3; // In readChar mode
+    private static final int WRITE = 1; // Not reading
+    private static final int READLINE = 2; // In readLine mode
+    private static final int READCHAR = 3; // In readChar mode
     
     // Private variables
     private int rows, cols; // Current rows and columns
@@ -87,7 +87,7 @@ class TextScreen extends java.awt.Component
     {
         TextScreen parentObject; // Object to notify at the appropriate times
         
-        public TextScreenKeyboardEventHandler(TextScreen myParent)
+        TextScreenKeyboardEventHandler(TextScreen myParent)
         {
             parentObject = myParent;
         }
@@ -111,15 +111,11 @@ class TextScreen extends java.awt.Component
                     if (((parentObject.attributes & KEYECHO) == KEYECHO) && !((((char)key) == '\b') && (parentObject.readString.length() == 0))) {
                         parentObject.printString(String.valueOf((char)key));
                     }
-                    switch ((char)key)
-                    {
-                        case '\b' : 
-                            if (parentObject.readString.length() > 0)
-                                parentObject.readString.setLength(parentObject.readString.length() - 1);
-                            break;
-                        default :
-                            parentObject.readString.append(String.valueOf((char)key));
-                            break;
+                    if ((char) key == '\b') {
+                        if (parentObject.readString.length() > 0)
+                            parentObject.readString.setLength(parentObject.readString.length() - 1);
+                    } else {
+                        parentObject.readString.append((char) key);
                     }
                     return;
 
@@ -151,8 +147,8 @@ class TextScreen extends java.awt.Component
         @param initialCols The initial numner of columns of text
         @param attrs The initial attributes
     */
-    public TextScreen(Font initialFont,Color bgColor,Color fgColor,
-                        int initialRows,int initialCols,int attrs)
+    TextScreen(Font initialFont, Color bgColor, Color fgColor,
+               int initialRows, int initialCols, int attrs)
     {
         super();
         

@@ -32,6 +32,8 @@ import com.zaxsoft.zax.zmachine.ZUserInterface;
 
 import javax.swing.*;
 
+import static java.awt.Event.*;
+
 /**
  * Zax main class.
  *
@@ -45,7 +47,7 @@ public class UserInterface extends JFrame implements ZUserInterface {
     private Dimension screenSize; // Size of the entire screen in characters
     private int version = 0;    // Version of this story file - 0 if game not yet initialized.
     private int moreLines = 0; // Number of lines before next MORE
-    private Hashtable inputCharacters; // Used to translate between Event input characters and Z-Machine input characters
+    private Hashtable<Integer, Integer> inputCharacters; // Used to translate between Event input characters and Z-Machine input characters
     private Vector terminatingCharacters; // List of terminating characters for READ operations
     private Thread cpuThread = null; // Thread of ZMachine CPU
     
@@ -151,28 +153,28 @@ public class UserInterface extends JFrame implements ZUserInterface {
         // if this is a restart.
         // Initialize the Event-->Z-Character translation table.
         // Warning!  Hardcoded values ahead!
-        inputCharacters = new Hashtable(16);
-        inputCharacters.put(new Integer(Event.UP),new Integer(129));
-        inputCharacters.put(new Integer(Event.DOWN),new Integer(130));
-        inputCharacters.put(new Integer(Event.LEFT),new Integer(131));
-        inputCharacters.put(new Integer(Event.RIGHT),new Integer(132));
-        inputCharacters.put(new Integer(Event.F1),new Integer(133));
-        inputCharacters.put(new Integer(Event.F2),new Integer(134));
-        inputCharacters.put(new Integer(Event.F3),new Integer(135));
-        inputCharacters.put(new Integer(Event.F4),new Integer(136));
-        inputCharacters.put(new Integer(Event.F5),new Integer(137));
-        inputCharacters.put(new Integer(Event.F6),new Integer(138));
-        inputCharacters.put(new Integer(Event.F7),new Integer(139));
-        inputCharacters.put(new Integer(Event.F8),new Integer(140));
-        inputCharacters.put(new Integer(Event.F9),new Integer(141));
-        inputCharacters.put(new Integer(Event.F10),new Integer(142));
-        inputCharacters.put(new Integer(Event.F11),new Integer(143));
-        inputCharacters.put(new Integer(Event.F12),new Integer(144));
+        inputCharacters = new Hashtable<>(16);
+        inputCharacters.put(UP, 129);
+        inputCharacters.put(DOWN, 130);
+        inputCharacters.put(LEFT, 131);
+        inputCharacters.put(RIGHT, 132);
+        inputCharacters.put(F1, 133);
+        inputCharacters.put(F2, 134);
+        inputCharacters.put(F3, 135);
+        inputCharacters.put(F4, 136);
+        inputCharacters.put(F5, 137);
+        inputCharacters.put(F6, 138);
+        inputCharacters.put(F7, 139);
+        inputCharacters.put(F8, 140);
+        inputCharacters.put(F9, 141);
+        inputCharacters.put(F10, 142);
+        inputCharacters.put(F11, 143);
+        inputCharacters.put(F12, 144);
     
         // Set up the terminating characters.  Carriage Return
         // (13) is always a terminating character.  Also LF (10).
         terminatingCharacters = new Vector();
-        terminatingCharacters.addElement(new Integer(13));
+        terminatingCharacters.addElement(13);
         terminatingCharacters.addElement(new Integer(10));
         
         // Set up the screen, etc
