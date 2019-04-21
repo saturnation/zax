@@ -22,10 +22,8 @@
 package com.zaxsoft.zax.awt;
 
 import java.awt.*;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
+import java.util.List;
 
 import com.zaxsoft.zax.zmachine.ZCPU;
 import com.zaxsoft.zax.zmachine.ZUserInterface;
@@ -48,7 +46,7 @@ public class UserInterface extends JFrame implements ZUserInterface {
     private int version = 0;    // Version of this story file - 0 if game not yet initialized.
     private int moreLines = 0; // Number of lines before next MORE
     private Hashtable<Integer, Integer> inputCharacters; // Used to translate between Event input characters and Z-Machine input characters
-    private Vector terminatingCharacters; // List of terminating characters for READ operations
+    private List terminatingCharacters; // List of terminating characters for READ operations
     private Thread cpuThread = null; // Thread of ZMachine CPU
     
     public void start(String zaxVersion) {
@@ -69,7 +67,7 @@ public class UserInterface extends JFrame implements ZUserInterface {
         Insets ins = getInsets();
         setSize(ins.left + ins.right + screen.getPreferredSize().width,
                 ins.top + ins.bottom + screen.getPreferredSize().height);
-        show();
+        setVisible(true);
     }
 
     // Handle menu events
@@ -173,9 +171,9 @@ public class UserInterface extends JFrame implements ZUserInterface {
     
         // Set up the terminating characters.  Carriage Return
         // (13) is always a terminating character.  Also LF (10).
-        terminatingCharacters = new Vector();
-        terminatingCharacters.addElement(13);
-        terminatingCharacters.addElement(new Integer(10));
+        terminatingCharacters = new ArrayList();
+        terminatingCharacters.add(13);
+        terminatingCharacters.add(10);
         
         // Set up the screen, etc
         this.version = version;
@@ -253,7 +251,7 @@ public class UserInterface extends JFrame implements ZUserInterface {
     // Sets the terminating characters for READ operations (other than
     // CR).  Translates from Z-Characters to Event characters by
     // enumerating through the inputCharacter table.
-    public void setTerminatingCharacters(Vector characters)
+    public void setTerminatingCharacters(List characters)
     {
         Integer c;
         Integer key, element;
@@ -261,7 +259,7 @@ public class UserInterface extends JFrame implements ZUserInterface {
         boolean found;
         
         for (int i = 0; i < characters.size(); i++) {
-            c = (Integer) characters.elementAt(i);
+            c = (Integer) characters.get(i);
 
             // We don't bother using the Hashtable contains() method--
             // that just makes this whole thing more expensive.
@@ -271,14 +269,14 @@ public class UserInterface extends JFrame implements ZUserInterface {
                 key = (Integer)e.nextElement();
                 element = (Integer)inputCharacters.get(key);
                 if (element == c) {
-                    terminatingCharacters.addElement(key);
+                    terminatingCharacters.add(key);
                     found = true;
                     break;
                 }
             }
             
             if (!found)
-                terminatingCharacters.addElement(c);
+                terminatingCharacters.add(c);
         }
         screen.setTerminators(terminatingCharacters);
     }
@@ -588,7 +586,9 @@ public class UserInterface extends JFrame implements ZUserInterface {
 	}
 
 	// Get a filename for save or restore
-	public String getFilename(String title,String suggested,boolean saveFlag)
+	public String getFilename(String title,
+                              String suggested,
+                              boolean saveFlag)
 	{
 		FileDialog fd;
 		String s;
@@ -599,7 +599,7 @@ public class UserInterface extends JFrame implements ZUserInterface {
 			fd.setFile(suggested);
 		else if (saveFlag)
 			fd.setFile("*.zav");
-		fd.show();
+		fd.setVisible(true);
 		s = fd.getFile();
 		if (s == null)
 		    return null;

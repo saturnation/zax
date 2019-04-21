@@ -22,7 +22,7 @@
 package com.zaxsoft.zax.zmachine;
 
 import java.awt.*;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * ZUserInterface - This interface must be implemented by a programmer
@@ -45,7 +45,7 @@ public interface ZUserInterface {
     // READ operations.  It should be called after initialize, and
     // should be passed a Vector of Integer objects containing
     // the Z-Characters that should be treated as terminating characters.
-    void setTerminatingCharacters(Vector characters);
+    void setTerminatingCharacters(List characters);
     
     // This method returns true if the user interface supports a
     // status line.

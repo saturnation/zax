@@ -24,6 +24,8 @@ package com.zaxsoft.zax.awt;
 import java.awt.*;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -74,7 +76,7 @@ class TextScreen extends java.awt.Component
     private FontMetrics curFontMetrics; // Current font metrics
     private int fontHeight, fontMaxWidth, fontAscent; // Size of current font
     private Rectangle curRegion; // Rectangle describing active region
-    private Vector terminators; // Characters that terminate a line of input
+    private List terminators; // Characters that terminate a line of input
     private Image offscreen; // Image used for offscreen drawing
     private int curRow, curCol; // Row and column of text cursor
     private int cursorX, cursorY; // Location of visible cursor
@@ -147,6 +149,7 @@ class TextScreen extends java.awt.Component
         @param initialCols The initial numner of columns of text
         @param attrs The initial attributes
     */
+
     TextScreen(Font initialFont, Color bgColor, Color fgColor,
                int initialRows, int initialCols, int attrs)
     {
@@ -181,7 +184,7 @@ class TextScreen extends java.awt.Component
         
         // Initialize terminating characters.  CR is one by default.
         terminators = new Vector();
-        terminators.addElement(13);
+        terminators.add(13);
         
         // Add key listener
         addKeyListener(new TextScreenKeyboardEventHandler(this));
@@ -194,16 +197,16 @@ class TextScreen extends java.awt.Component
         
         @param chars New vector of terminating characters
     */
-    public void setTerminators(Vector chars)
+    public void setTerminators(List chars)
     {
-        terminators = (Vector)chars.clone();
+        Collections.copy(terminators, chars);
     }
     
     /** Returns a vector of the current terminators.
     
         @return Vector containing current terminators.
     */
-    public Vector getTerminators()
+    public List getTerminators()
     {
         return terminators;
     }
